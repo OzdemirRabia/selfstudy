@@ -19,26 +19,26 @@
       EOF
       sysctl --system
 
-  - name: update apt-get
-    shell: apt-get update
+  - name: yum apt-get
+    shell: yum
 
   - name: Install packages that allow apt to be used over HTTPS
-    apt:
+    yum:
       name: "{{ packages }}"
       state: present
-      update_cache: yes
+      yum_cache: yes
     vars:
       packages:
       - apt-transport-https  
       - curl
       - ca-certificates
 
-  - name: update apt-get and install kube packages
+  - name: yum apt-get and install kube packages
     shell: |
       curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
       echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
-      apt-get update -q && \
-      apt-get install -qy kubelet=1.23.5-00 kubectl=1.23.5-00 kubeadm=1.23.5-00 docker.io
+      yum -q && \
+      yum install -qy kubelet=1.23.5-00 kubectl=1.23.5-00 kubeadm=1.23.5-00 docker.io
 
   - name: Add ubuntu to docker group
     user:
@@ -143,8 +143,8 @@
       chmod 777 get_helm.sh
       ./get_helm.sh
       helm repo add aws-cloud-controller-manager https://kubernetes.github.io/cloud-provider-aws
-      helm repo update
-      helm upgrade --install aws-cloud-controller-manager aws-cloud-controller-manager/aws-cloud-controller-manager --set image.tag=v1.20.0-alpha.0
+      helm repo yum
+      helm  yum --install aws-cloud-controller-manager aws-cloud-controller-manager/aws-cloud-controller-manager --set image.tag=v1.20.0-alpha.0
       
   - name: Deploy Nginx Ingress 
     shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.2/deploy/static/provider/aws/deploy.yaml
