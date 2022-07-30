@@ -13,4 +13,4 @@ allowedTopologies:
 - matchLabelExpressions:
   - key: topology.ebs.csi.aws.com/zone
     values:
-    - us-east-1f
+    - us-east-1a
