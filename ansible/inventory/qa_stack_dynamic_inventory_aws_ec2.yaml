@@ -3,7 +3,7 @@ regions:
   - "us-east-1"
 filters:
   tag:Project: tera-kube-ans
-  tag:environment: dev
+  tag:environment: qa
   instance-state-name: running
 keyed_groups:
   - key: tags['Project']
@@ -11,6 +11,6 @@ keyed_groups:
   - key: tags['Role']
     prefix: 'role'
 hostnames:
-  # - "ip-address"
+  - "ip-address"
 compose:
   ansible_user: "'ubuntu'"
